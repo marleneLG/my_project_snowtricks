@@ -14,7 +14,11 @@
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio">
         <div class="container">
-
+            {% for notice in app.flashes('notice') %}
+            <div class="alert alert-success" role="alert">
+                {{ notice }}
+            </div>
+            {% endfor %}
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                 <h2>Liste des figures</h2>
             </div>
