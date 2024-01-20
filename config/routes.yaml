@@ -19,7 +19,11 @@ app_login:
 _logout_main:
   path: /logout
   controller: App\Controller\LoginController::logout
-  
+
 app_register:
   path: /register
   controller: App\Controller\RegistrationController::register
+
+app_trick_new:
+  path: /new
+  controller: App\Controller\TrickController::new
