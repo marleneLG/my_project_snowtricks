@@ -24,6 +24,10 @@ app_register:
   path: /register
   controller: App\Controller\RegistrationController::register
 
+reset-password:
+  path: /reset-password
+  controller: src\Controller\ResetPasswordController.php
+
 app_trick_new:
   path: /new
   controller: App\Controller\TrickController::new
