@@ -24,6 +24,13 @@
             {% endfor %}
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
                 <h2>List of figures</h2>
+                {% if app.user %}
+                <span class="create-trick">
+                    <button>
+                        <a href="{{ path('app_trick_new') }}">Create new</a>
+                    </button>
+                </span>
+                {% endif %}
             </div>
 
             <div class="row portfolio-container" data-aos="fade-up">
