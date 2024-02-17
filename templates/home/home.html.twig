@@ -19,66 +19,44 @@
                 {{ notice }}
             </div>
             {% endfor %}
+            {% for flash in app.flashes('success') %}
+            <div class="alert alert-success">{{ flash }}</div>
+            {% endfor %}
             <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-                <h2>list of figures</h2>
+                <h2>List of figures</h2>
             </div>
 
             <div class="row portfolio-container" data-aos="fade-up">
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-wrap card-trick">
-                        <img src="/assets/img/portfolio/snow1.jpg" class="img-fluid" alt="">
-                        <a href="#" class="btn btn-outline-info btn-sm">Learn more
-                        </a>
+                {% for trick in tricks %}
+                <div class="col-lg-4 col-md-6 portfolio-item">
+                    <div class="text-center">
+                        <h5>
+                            <div>
+                                {# <a href="{{ path('app_trick_show', {'slug': trick.slug}) }}"> #}
+                                    <a href="{{ path('app_trick_show', {'id': trick.id}) }}">
+                                        <span>
+                                            {{ trick.name }}
+                                        </span>
+                                    </a>
+                                    {% if app.user %}
+                                    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}"><i
+                                            class="bi bi-pen"></i></a>
+                                    <a href="{{ path('app_trick_delete', {'id': trick.id}) }}"
+                                        onclick="return confirm(`Are you sure you want to remove the trick : {{trick.name}} ?`)"><i
+                                            class="bi bi-trash"></i></a>
+                            </div>
+                            {% endif %}
+                        </h5>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <div class="portfolio-wrap card-trick">
-                        <img src="assets/img/portfolio/snow2.jpg" class="img-fluid" alt="">
-                        <a href="#" class="btn btn-outline-info btn-sm">Learn more
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-wrap card-trick">
-                        <img src="assets/img/portfolio/snow3.jpg" class="img-fluid" alt="">
-                        <a href="#" class="btn btn-outline-info btn-sm">Learn more
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                    <div class="portfolio-wrap card-trick">
-                        <img src="assets/img/portfolio/snow4.jpg" class="img-fluid" alt="">
-                        <a href="#" class="btn btn-outline-info btn-sm">Learn more
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <div class="portfolio-wrap card-trick">
-                        <img src="assets/img/portfolio/snow5.jpg" class="img-fluid" alt="">
-                        <a href="#" class="btn btn-outline-info btn-sm">Learn more
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <div class="portfolio-wrap card-trick">
-                        <img src="assets/img/portfolio/snow9.jpg" class="img-fluid" alt="">
-                        <a href="#" class="btn btn-outline-info btn-sm">Learn more
-                        </a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-        </div>
-        <div class="text-center">
-            <a href="#" id="loadMoreTrick">
-                <i class="bi bi-plus-circle"></i>
-            </a>
-        </div>
+
+            <div class="text-center">
+                <a href="#" id="loadMoreTrick">
+                    <i class="bi bi-plus-circle"></i>
+                </a>
+            </div>
     </section><!-- End Portfolio Section -->
 
     {% endblock content %}
