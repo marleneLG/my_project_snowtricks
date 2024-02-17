@@ -29,5 +29,5 @@ reset-password:
   controller: src\Controller\ResetPasswordController.php
 
 app_trick_new:
-  path: /new
+  path: /newTrick
   controller: App\Controller\TrickController::new

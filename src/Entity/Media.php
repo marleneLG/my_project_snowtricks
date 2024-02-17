@@ -2,21 +2,23 @@
 
 namespace App\Entity;
 
-use App\Repository\MessageRepository;
+use App\Repository\MediaRepository;
 use DateTime;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: MessageRepository::class)]
-class Message
+#[ORM\Entity(repositoryClass: MediaRepository::class)]
+class Media
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $content = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $url = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $embed = null;
 
     #[ORM\Column]
     private ?DateTime $created_at = null;
@@ -24,12 +26,9 @@ class Message
     #[ORM\Column]
     private ?DateTime $updated_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'messages')]
-    private ?Trick $trick = null;
-
-    #[ORM\ManyToOne(inversedBy: 'messages')]
+    #[ORM\ManyToOne(inversedBy: 'media', targetEntity: Trick::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?Trick $Trick = null;
 
     public function __construct()
     {
@@ -42,16 +41,26 @@ class Message
         return $this->id;
     }
 
-    // ... getter and setter methods
-
-    public function getContent(): ?string
+    public function getUrl(): ?string
     {
-        return $this->content;
+        return $this->url;
     }
 
-    public function setContent(string $content): static
+    public function setUrl(string $url): static
     {
-        $this->content = $content;
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getEmbed(): ?string
+    {
+        return $this->embed;
+    }
+
+    public function setEmbed(string $embed): static
+    {
+        $this->embed = $embed;
 
         return $this;
     }
@@ -82,25 +91,23 @@ class Message
 
     public function getTrick(): ?Trick
     {
-        return $this->trick;
+        return $this->Trick;
     }
 
-    public function setTrick(?Trick $trick): static
+    public function setTrick(?Trick $Trick): static
     {
-        $this->trick = $trick;
+        $this->Trick = $Trick;
 
         return $this;
     }
 
-    public function getUser(): ?User
+    public static function getImagesTypes(): array
     {
-        return $this->user;
+        return ['image/jpeg'];
     }
 
-    public function setUser(?User $user): static
+    public static function getVideosTypes(): array
     {
-        $this->user = $user;
-
-        return $this;
+        return ['video/mp4'];
     }
 }
