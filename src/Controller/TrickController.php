@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Media;
+use App\Entity\Message;
 use App\Entity\Trick;
+use App\Form\MessageType;
 use App\Form\TrickType;
+use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,11 +97,54 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response
+    // #[Route('/show/{slug}', name: 'app_trick_show', methods: ['GET'])]
+    #[Route('/{id}/show', name: 'app_trick_show', methods: ['GET'])]
+    public function show(Trick $trick, Request $request, EntityManagerInterface $entityManager, MessageRepository $messageRepository, PaginatorInterface $paginator): Response
     {
+        $trickMessage = new Message();
+        $formMessage = $this->createForm(MessageType::class, $trickMessage);
+        $formMessage->handleRequest($request);
+        $images = [];
+        $videos = [];
+        $embed = [];
+        $pagination = $paginator->paginate(
+            $messageRepository->paginationQuery(),
+            $request->query->get('page', 1),
+            2
+        );
+        foreach ($trick->getMedias() as $media) {
+            if ($media->getUrl() !== null) {
+                $mimeType = @mime_content_type($this->getParameter('medias_directory') . '/' . $media->getUrl());
+                if (in_array($mimeType, Media::getImagesTypes())) {
+                    $images[] = $media;
+                } elseif (in_array($mimeType, Media::getVideosTypes())) {
+                    $videos[] = $media;
+                }
+            } elseif ($media->getEmbed() !== null) {
+                $embed[] = $media;
+            }
+        }
+
+        if ($formMessage->isSubmitted() && $formMessage->isValid()) {
+            $trickMessage->setTrick($trick);
+            $trickMessage->setUser($this->getUser());
+            $entityManager->persist($trickMessage);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                'Well saved comment'
+            );
+        }
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'images' => $images,
+            'videos' => $videos,
+            'embed' => $embed,
+            "slug" => $trick->getSlug(),
+            'formMessage' => $formMessage,
+            'pagination' => $pagination,
         ]);
     }
 

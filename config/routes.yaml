@@ -8,10 +8,6 @@ home:
   path: /
   controller: App\Controller\HomeController::home
 
-registration:
-  path: /registration
-  controller: App\Controller\UserController::new
-
 app_login:
   path: /login
   controller: App\Controller\LoginController::login
@@ -24,10 +20,15 @@ app_register:
   path: /register
   controller: App\Controller\RegistrationController::register
 
-reset-password:
-  path: /reset-password
+reset_password:
+  path: /resetPassword
   controller: src\Controller\ResetPasswordController.php
 
 app_trick_new:
   path: /newTrick
   controller: App\Controller\TrickController::new
+
+app_trick_show:
+  # path: /show/{slug}
+  path: /{id}/show
+  controller: App\Controller\TrickController::show
