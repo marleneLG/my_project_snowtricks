@@ -13,4 +13,11 @@ class MessageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Message::class);
     }
+
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.created_at', 'DESC')
+            ->getQuery();
+    }
 }
