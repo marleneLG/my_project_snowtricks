@@ -24,7 +24,7 @@ class RegistrationFormType extends AbstractType
             ->add('email')
             ->add('picture', FileType::class, [
                 'mapped' => false,
-                'label' => "picture",
+                'label' => "Picture",
                 'constraints' => [
                     new File([
                         'maxSize' => '1Mi',
