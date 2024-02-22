@@ -17,7 +17,9 @@
         </div>
         {% endif %}
     </div>
-
+    {% for flash in app.flashes('success') %}
+    <div class="alert alert-success">{{ flash }}</div>
+    {% endfor %}
     <div class="row">
         {% for media in images %}
         <div>
@@ -54,9 +56,6 @@
     <hr>
 
     <div class="row text-center">
-        {% for flash in app.flashes('success') %}
-        <div class="alert alert-success">{{ flash }}</div>
-        {% endfor %}
         {% if app.user %}
         <div class="col-sm-10 col-md-8 mx-auto">
             {{ form_start(formMessage) }}
