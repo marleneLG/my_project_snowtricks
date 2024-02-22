@@ -83,6 +83,13 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        if ($user->getName() !== null) {
+            $this->addFlash(
+                'notice',
+                'Name already exist'
+            );
+        }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
