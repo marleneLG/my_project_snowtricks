@@ -29,6 +29,10 @@ app_trick_new:
   controller: App\Controller\TrickController::new
 
 app_trick_show:
-  # path: /show/{slug}
-  path: /{id}/show
+  path: /show/{slug}
+  # path: /{id}/show
   controller: App\Controller\TrickController::show
+
+app_trick_delete:
+  path: /trick/{id}/delete
+  controller: App\Controller\TrickController::delete
