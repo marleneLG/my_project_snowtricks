@@ -6,6 +6,11 @@
 <div class="edit-trick">
     <h1>Edit Trick</h1>
 </div>
+{% for message in app.flashes('notice') %}
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
 {{ include('trick/_form.html.twig', {'button_label': 'Update'}) }}
 
 <a href="{{ path('home') }}">back to list</a>
