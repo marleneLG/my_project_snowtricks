@@ -33,6 +33,11 @@ app_trick_show:
   # path: /{id}/show
   controller: App\Controller\TrickController::show
 
+app_trick_edit:
+  path: /edit/{slug}
+  # path: /{id}/show
+  controller: App\Controller\TrickController::edit
+
 app_trick_delete:
-  path: /trick/{id}/delete
+  path: /trick/{slug}/delete
   controller: App\Controller\TrickController::delete

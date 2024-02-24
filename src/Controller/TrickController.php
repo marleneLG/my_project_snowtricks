@@ -94,7 +94,7 @@ class TrickController extends AbstractController
                 'success',
                 'The trick ' . $trick->getName() . ' was successfully registered !'
             );
-            return $this->redirectToRoute('app_trick_show', ['id' => $trick->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
 
@@ -159,7 +159,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_trick_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{slug}', name: 'app_trick_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger, MediaRepository $mediaRepository): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
@@ -220,15 +220,14 @@ class TrickController extends AbstractController
         return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form,
+            'slug' => $trick->getSlug(),
         ]);
     }
 
-    #[Route('/trick/{id}/delete', name: 'app_trick_delete', methods: ['DELETE'])]
+    #[Route('/trick/{slug}/delete', name: 'app_trick_delete', methods: ['DELETE'])]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
-        dump('avant if ??');
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
-            dump('je passe ici, ou pas!!!');
 
             $entityManager->remove($trick);
             $entityManager->flush();
