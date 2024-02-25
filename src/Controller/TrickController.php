@@ -86,7 +86,11 @@ class TrickController extends AbstractController
             // ma super @ figure !
             // ma_super_figure
 
-            $trick->setSlug($trick->getName());
+            $form = $form->getData();
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($form->getName());
+            $trick->setSlug($slug);
+            $slug = preg_replace('/\s+/', '_', $slug);
 
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -94,7 +98,7 @@ class TrickController extends AbstractController
                 'success',
                 'The trick ' . $trick->getName() . ' was successfully registered !'
             );
-            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_trick_show', ['slug' => $slug], Response::HTTP_SEE_OTHER);
         }
 
 
@@ -119,10 +123,7 @@ class TrickController extends AbstractController
             $request->query->get('page', 1),
             2
         );
-        $slugger = new AsciiSlugger();
-        $slug = $slugger->slug($trick->getName());
-        // preg_replace('/(?<!^)([A-Z][a-z]|(?<=[a-z])[^a-z]|(?<=[A-Z])[0-9_])/','', $slug);
-        $slug = preg_replace('/\s\s+/', '', $slug);
+
         foreach ($trick->getMedias() as $media) {
             if ($media->getUrl() !== null) {
                 $mimeType = @mime_content_type($this->getParameter('medias_directory') . '/' . $media->getUrl());
@@ -153,7 +154,6 @@ class TrickController extends AbstractController
             'images' => $images,
             'videos' => $videos,
             'embed' => $embed,
-            'slug' => $slug,
             'formMessage' => $formMessage,
             'pagination' => $pagination,
         ]);
@@ -196,6 +196,12 @@ class TrickController extends AbstractController
                 $trickMedia->setEmbed($embed);
                 $trick->addMedia($trickMedia);
             }
+
+            $form = $form->getData();
+            $slugger = new AsciiSlugger();
+            $slug = $slugger->slug($form->getName());
+            $trick->setSlug($slug);
+            $slug = preg_replace('/\s+/', '_', $slug);
             // foreach ($trick->getMedias() as $media) {
 
             //     $url = $mediaRepository->findByUrl($media->getUrl());
