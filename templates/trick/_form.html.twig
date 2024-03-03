@@ -1,6 +1,46 @@
-<div class="py-3 px-4 mx-4 bg-light register-form">
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-    {{ form_end(form) }}
+<section class="py-5 mx-auto register">
+
+    {% for notice in app.flashes('notice') %}
+    <div class="alert alert-success" role="alert">
+        {{ notice }}
+    </div>
+    {% endfor %}
+
+    <div class="py-3 px-4 mx-4 bg-light register-form">
+
+        {{ form_start(form) }}
+
+        <div class="form-group col-md-6">
+            <label for="name" class="py-3">{{ form_label(form.name) }}</label>
+            {{ form_widget(form.name) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="description" class="py-3">{{ form_label(form.description) }}</label>
+            {{ form_widget(form.description) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="category" class="py-3">{{ form_label(form.category) }}</label>
+            {{ form_widget(form.category) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="picture" class="py-3">{{ form_label(form.embed) }}</label>
+            {{ form_widget(form.embed) }}
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="media" class="py-3">{{ form_label(form.media) }}</label>
+            {{ form_widget(form.media) }}
+        </div>
+
+        <div class="text-center">
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+
+        {{ form_end(form) }}
+
+    </div>
+</section>
 </div>

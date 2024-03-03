@@ -3,10 +3,17 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block content %}
-    <h1>Reset your password</h1>
+<section class="py-5 mx-auto l-container register">
+    <div class="container">
+        <h3 class="pb-5 fw-bold text-decoration-underline text-white">Reset Your Password</h1>
 
-    {{ form_start(resetForm) }}
-        {{ form_row(resetForm.plainPassword) }}
-        <button class="btn btn-primary">Reset password</button>
-    {{ form_end(resetForm) }}
+        {{ form_start(resetForm) }}
+        <div class="form-group">
+            {{ form_widget(resetForm.plainPassword) }}
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+        {{ form_end(resetForm) }}
+    </div>
+</section>
+
 {% endblock %}

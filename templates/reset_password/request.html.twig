@@ -3,20 +3,27 @@
 {% block title %}Reset your password{% endblock %}
 
 {% block content %}
-    {% for flash_error in app.flashes('reset_password_error') %}
+<section class="py-5 mx-auto l-container register">
+    <div class="container mt-4">
+        <h3 class="pb-5 fw-bold text-decoration-underline text-white">Password Reset</h3>
+        {% for flash_error in app.flashes('reset_password_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-    <h1>Reset your password</h1>
+        {% endfor %}
 
-    {{ form_start(requestForm) }}
-        {{ form_row(requestForm.email) }}
-        <div>
-            <small>
-                Enter your email address, and we will send you a
-                link to reset your password.
+        {{ form_start(requestForm) }}
+
+        <div class="form-group">
+            {{ form_label(requestForm.email) }}
+            {{ form_widget(requestForm.email) }}
+            <small class="form-text text-muted">
+                We will send you a link to reset your password.
             </small>
         </div>
 
-        <button class="btn btn-primary">Send password reset email</button>
-    {{ form_end(requestForm) }}
+        <button type="submit" class="btn btn-primary">Send Password Reset Email</button>
+
+        {{ form_end(requestForm) }}
+    </div>
+</section>
+
 {% endblock %}

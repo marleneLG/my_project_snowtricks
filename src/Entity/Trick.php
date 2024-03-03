@@ -36,7 +36,7 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'Trick', targetEntity: Media::class, cascade: ['persist', 'remove'])]
     private Collection $medias;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Message::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 
     #[ORM\Column(length: 255)]
