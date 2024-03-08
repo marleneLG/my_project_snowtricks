@@ -7,16 +7,17 @@ use App\Entity\Message;
 use App\Entity\Trick;
 use App\Form\MessageType;
 use App\Form\TrickType;
-use App\Repository\MediaRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ExpressionLanguage\Expression;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -32,6 +33,9 @@ class TrickController extends AbstractController
     }
 
     #[Route('/newTrick', name: 'app_trick_new', methods: ['GET', 'POST'])]
+    #[IsGranted(new Expression(
+        '"ROLE_ADMIN" in role_names or (is_authenticated())'
+    ))]
     public function new(Request $request, TrickRepository $repository, SluggerInterface $slugger, EntityManagerInterface $entityManager): Response
     {
         $trick = new Trick();
@@ -82,9 +86,6 @@ class TrickController extends AbstractController
                     'form' => $form,
                 ]);
             }
-
-            // ma super @ figure !
-            // ma_super_figure
 
             $form = $form->getData();
             $slugger = new AsciiSlugger();
@@ -160,7 +161,10 @@ class TrickController extends AbstractController
     }
 
     #[Route('/edit/{slug}', name: 'app_trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger, MediaRepository $mediaRepository): Response
+    #[IsGranted(new Expression(
+        '"ROLE_ADMIN" in role_names or (is_authenticated())'
+    ))]
+    public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -202,22 +206,7 @@ class TrickController extends AbstractController
             $slug = $slugger->slug($form->getName());
             $trick->setSlug($slug);
             $slug = preg_replace('/\s+/', '_', $slug);
-            // foreach ($trick->getMedias() as $media) {
 
-            //     $url = $mediaRepository->findByUrl($media->getUrl());
-            //     dump('url : ');
-            //     dump($media);
-            //     if ($url !== null) {
-            //         $this->addFlash(
-            //             'notice',
-            //             'Media already exist'
-            //         );
-            //         return $this->render('trick/edit.html.twig', [
-            //             'trick' => $trick,
-            //             'form' => $form,
-            //         ]);
-            //     }
-            // }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
@@ -231,6 +220,9 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}/delete', name: 'app_trick_delete', methods: ['DELETE'])]
+    #[IsGranted(new Expression(
+        '"ROLE_ADMIN" in role_names or (is_authenticated())'
+    ))]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
