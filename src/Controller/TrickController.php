@@ -67,7 +67,7 @@ class TrickController extends AbstractController
                         $trick->addMedia($trickMedia);
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
-                        dump($e);
+                        echo($e);
                     }
                 }
             } elseif ($embed) {
@@ -192,7 +192,7 @@ class TrickController extends AbstractController
                         $trick->addMedia($trickMedia);
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
-                        dump($e);
+                        echo($e);
                     }
                 }
             } elseif ($embed) {
