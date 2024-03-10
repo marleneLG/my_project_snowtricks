@@ -67,7 +67,7 @@ class TrickController extends AbstractController
                         $trick->addMedia($trickMedia);
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
-                        echo($e);
+                        echo ($e);
                     }
                 }
             } elseif ($embed) {
@@ -127,7 +127,12 @@ class TrickController extends AbstractController
 
         foreach ($trick->getMedias() as $media) {
             if ($media->getUrl() !== null) {
-                $mimeType = @mime_content_type($this->getParameter('medias_directory') . '/' . $media->getUrl());
+                try {
+                    $mimeType = @mime_content_type($this->getParameter('medias_directory') . '/' . $media->getUrl());
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                    echo ($e);
+                }
                 if (in_array($mimeType, Media::getImagesTypes())) {
                     $images[] = $media;
                 } elseif (in_array($mimeType, Media::getVideosTypes())) {
@@ -192,7 +197,7 @@ class TrickController extends AbstractController
                         $trick->addMedia($trickMedia);
                     } catch (FileException $e) {
                         // ... handle exception if something happens during file upload
-                        echo($e);
+                        echo ($e);
                     }
                 }
             } elseif ($embed) {
