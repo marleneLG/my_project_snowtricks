@@ -13,7 +13,7 @@ class MediaRepository extends ServiceEntityRepository
         parent::__construct($registry, Media::class);
     }
 
-    public function findByUrl(String $url)
+    public function findByUrl(String $url): ?object
     {
         return $this->findOneBy(['url' => $url]);
     }
