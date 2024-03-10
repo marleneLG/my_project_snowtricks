@@ -13,7 +13,7 @@ class TrickRepository extends ServiceEntityRepository
         parent::__construct($registry, Trick::class);
     }
 
-    public function findByName(String $name)
+    public function findByName(String $name): ?object
     {
         return $this->findOneBy(['name' => $name]);
     }
