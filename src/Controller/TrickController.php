@@ -119,10 +119,12 @@ class TrickController extends AbstractController
         $images = [];
         $videos = [];
         $embed = [];
+        $numberofComments = 2;
+        $isStarted = $request->query->get('page', 1);
         $pagination = $paginator->paginate(
             $messageRepository->paginationQuery(),
-            $request->query->get('page', 1),
-            2
+            $isStarted,
+            $numberofComments
         );
 
         foreach ($trick->getMedias() as $media) {
