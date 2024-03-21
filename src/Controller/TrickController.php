@@ -232,7 +232,7 @@ class TrickController extends AbstractController
     ))]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete-trick', $request->request->get('_token'))) {
 
             $entityManager->remove($trick);
             $entityManager->flush();
