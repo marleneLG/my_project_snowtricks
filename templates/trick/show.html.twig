@@ -91,8 +91,7 @@
         <hr>
 
         <section>
-            {# {% for message in pagination %} #}
-            {% for comment in trick.messages %}
+            {% for comment in pagination %}
             <div class="row mx-auto">
                 <div class="col-md-10 col-12 mx-auto row">
                     <div class="w-25 p-3 col-lg-2 col-4">
@@ -107,9 +106,8 @@
                 </div>
             </div>
             {% endfor %}
-            {# {% endfor %} #}
-
-            <div class="pagination mt-3">
+            {# display navigation #}
+            <div class="navigation">
                 {{ knp_pagination_render(pagination) }}
             </div>
         </section>
