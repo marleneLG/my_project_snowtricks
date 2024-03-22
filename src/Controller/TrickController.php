@@ -7,7 +7,6 @@ use App\Entity\Message;
 use App\Entity\Trick;
 use App\Form\MessageType;
 use App\Form\TrickType;
-use App\Repository\MessageRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -111,7 +110,7 @@ class TrickController extends AbstractController
 
     #[Route('/show/{slug}', name: 'app_trick_show', methods: ['GET'])]
     // #[Route('/{id}/show', name: 'app_trick_show', methods: ['GET'])]
-    public function show(Trick $trick, Request $request, EntityManagerInterface $entityManager, MessageRepository $messageRepository, PaginatorInterface $paginator): Response
+    public function show(Trick $trick, Request $request, EntityManagerInterface $entityManager, PaginatorInterface $paginator): Response
     {
         $trickMessage = new Message();
         $formMessage = $this->createForm(MessageType::class, $trickMessage);
@@ -120,13 +119,14 @@ class TrickController extends AbstractController
         $videos = [];
         $embed = [];
         $numberofComments = 2;
-        $isStarted = $request->query->get('page', 1);
+        $query = $entityManager->createQuery('SELECT m
+            FROM App\Entity\Message m
+            WHERE m.trick = :trick_id  ORDER BY m.created_at DESC')->setParameter('trick_id', $trick->getId());
         $pagination = $paginator->paginate(
-            $messageRepository->paginationQuery(),
-            $isStarted,
-            $numberofComments
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            $numberofComments /*limit per page*/
         );
-
         foreach ($trick->getMedias() as $media) {
             if ($media->getUrl() !== null) {
                 try {
