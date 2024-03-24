@@ -3,4 +3,4 @@
 # issue: install libraries, prepare the database, etc.
 pre_composer_script: |
     #!/bin/bash
- symfony server:start     
+    composer install
