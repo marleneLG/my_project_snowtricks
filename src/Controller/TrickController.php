@@ -130,7 +130,7 @@ class TrickController extends AbstractController
         foreach ($trick->getMedias() as $media) {
             if ($media->getUrl() !== null) {
                 try {
-                    $mimeType = @mime_content_type($this->getParameter('medias_directory') . '/' . $media->getUrl());
+                    $mimeType = mime_content_type($this->getParameter('medias_directory') . '/' . $media->getUrl());
                 } catch (FileException $e) {
                     // ... handle exception if something happens during file upload
                     echo ($e);
