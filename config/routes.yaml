@@ -22,7 +22,7 @@ app_register:
 
 reset_password:
   path: /resetPassword
-  controller: src\Controller\ResetPasswordController::createResetPasswordRequest
+  controller: App\Controller\ResetPasswordController::createResetPasswordRequest
 
 app_trick_new:
   path: /newTrick
