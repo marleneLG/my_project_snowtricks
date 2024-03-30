@@ -1,4 +1,4 @@
-# Project 6 : Snowtrick
+# Project 6 : Snowtricks
 
 This project was created as part of my training with openclassrooms to present you my skills obtained through my learning.
 
