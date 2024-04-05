@@ -31,19 +31,30 @@ In order to install the project, follow these simple steps.
 ### Clone
 
 - Clone the project with this command: 
-    `https://github.com/marleneLG/my_project_snowtricks.git`
+```shell
+git clone https://github.com/marleneLG/my_project_snowtricks.git
+```
 - For more information: [GitHub Documentation](https://docs.github.com/fr/repositories/creating-and-managing-repositories/cloning-a-repository)
 
 ### Configuration
 
 - Perform the "composer install" command in order to install the necessary back dependencies: 
-    `composer install`
+```shell
+composer install
+```
 - Configure environment variables such as database connection, emails in file `.env` :
     `DATABASE_URL="mysql://root:@127.0.0.1:3306/my_project_snowtricks"`
     `MAILER_DSN=smtp://localhost:1025`
 - Create database: 
-    `php bin/console doctrine:database:create`
+```shell
+php bin/console doctrine:database:create
+```
 - Apply migration:
-  `php bin/console doctrine:migrations:migrate`
+```shell
+php bin/console doctrine:migrations:migrate
+```
 - Start the project:
-    `php bin/console server:start`
+```shell
+php bin/console server:start
+```
+
