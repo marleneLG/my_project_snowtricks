@@ -12,7 +12,7 @@ framework:
     handler_id: ~
     cookie_secure: auto
     cookie_samesite: lax
-    name: "snowtrick.session"
+    name: "SNOWTRICK_SESSION"
 
   #esi: true
   #fragments: true
