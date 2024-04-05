@@ -26,7 +26,7 @@ class Media
     #[ORM\Column]
     private ?DateTime $updated_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'media', targetEntity: Trick::class)]
+    #[ORM\ManyToOne(inversedBy: 'medias', targetEntity: Trick::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?Trick $Trick = null;
 
