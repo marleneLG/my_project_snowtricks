@@ -155,6 +155,7 @@ class TrickController extends AbstractController
                 'success',
                 'Well saved comment'
             );
+            return $this->redirectToRoute('app_trick_show', ['slug' => $trick->getSlug()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('trick/show.html.twig', [
