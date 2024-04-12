@@ -118,7 +118,7 @@ class TrickController extends AbstractController
         $images = [];
         $videos = [];
         $embed = [];
-        $numberofComments = 2;
+        $numberofComments = 10;
         $query = $entityManager->createQuery('SELECT m
             FROM App\Entity\Message m
             WHERE m.trick = :trick_id  ORDER BY m.created_at DESC')->setParameter('trick_id', $trick->getId());
